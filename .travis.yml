@@ -5,6 +5,6 @@ install:
   - pip install --user awscli
 script:
   - ./gradlew clean build
-  - aws s3 cp ./build/distributions/cicd.zip s3://cicddev/cicd-$TRAVIS_BUILD_NUMBER
+  - aws s3 cp build/distributions/cicd.zip s3://cicddev/cicd-$TRAVIS_BUILD_NUMBER
   - aws elasticbeanstalk create-application-version --application-name cicd --version-label $TRAVIS_BUILD_NUMBER --description update$TRAVIS_BUILD_NUMBER --source-bundle S3Bucket="cicddev",S3Key="cicd-$TRAVIS_BUILD_NUMBER" --auto-create-application
   - aws elasticbeanstalk update-environment --environment-name Sample-env-1 --version-label $TRAVIS_BUILD_NUMBER
